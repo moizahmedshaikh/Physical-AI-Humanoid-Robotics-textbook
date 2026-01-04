@@ -1,0 +1,585 @@
+/* index.module.css - MAIN HOME PAGE */
+
+/* ============================================
+   ADVANCED CSS VARIABLES - FUTURISTIC THEME
+   ============================================ */
+
+:root {
+  /* CYBERPUNK DARK THEME (Default) */
+  --cyber-black: #0a0b0e;
+  --cyber-dark: #111827;
+  --cyber-darker: #1e293b;
+  --cyber-blue: #3b82f6;
+  --cyber-cyan: #06b6d4;
+  --cyber-purple: #8b5cf6;
+  --cyber-pink: #ec4899;
+  --cyber-green: #10b981;
+  --cyber-glow: #60a5fa;
+  --cyber-text: #f1f5f9;
+  --cyber-text-secondary: #94a3b8;
+  --cyber-border: rgba(59, 130, 246, 0.2);
+  --cyber-grid: rgba(96, 165, 250, 0.05);
+  
+  /* NEON GLOW EFFECTS */
+  --glow-primary: 0 0 20px rgba(59, 130, 246, 0.4);
+  --glow-secondary: 0 0 30px rgba(139, 92, 246, 0.3);
+  --glow-cyan: 0 0 25px rgba(6, 182, 212, 0.3);
+  
+  /* GRADIENTS */
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-blue) 0%, var(--cyber-cyan) 50%, var(--cyber-purple) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--cyber-black) 0%, var(--cyber-dark) 100%);
+  --gradient-card: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(17, 24, 39, 0.9) 100%);
+}
+
+[data-theme='light'] {
+  /* FUTURISTIC LIGHT THEME */
+  --cyber-black: #ffffff;
+  --cyber-dark: #f1f5f9;
+  --cyber-darker: #e2e8f0;
+  --cyber-blue: #2563eb;
+  --cyber-cyan: #0891b2;
+  --cyber-purple: #7c3aed;
+  --cyber-pink: #db2777;
+  --cyber-green: #059669;
+  --cyber-glow: #1d4ed8;
+  --cyber-text: #0f172a;
+  --cyber-text-secondary: #475569;
+  --cyber-border: rgba(37, 99, 235, 0.15);
+  --cyber-grid: rgba(37, 99, 235, 0.05);
+  
+  --glow-primary: 0 0 15px rgba(37, 99, 235, 0.2);
+  --glow-secondary: 0 0 20px rgba(124, 58, 237, 0.15);
+  --glow-cyan: 0 0 18px rgba(8, 145, 178, 0.15);
+  
+  --gradient-cyber: linear-gradient(135deg, var(--cyber-blue) 0%, var(--cyber-cyan) 50%, var(--cyber-purple) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--cyber-dark) 0%, var(--cyber-darker) 100%);
+  --gradient-card: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(241, 245, 249, 0.98) 100%);
+}
+
+/* ============================================
+   CYBERPUNK HERO SECTION
+   ============================================ */
+
+.heroBanner {
+  padding: 0;
+  min-height: 100vh;
+  background: var(--gradient-dark);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+/* CYBER GRID BACKGROUND */
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(var(--cyber-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cyber-grid) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 70%);
+  animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* GLOWING ORBS */
+.heroOrb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.4;
+  animation: orbFloat 15s ease-in-out infinite;
+}
+
+.heroOrb:nth-child(1) {
+  width: 400px;
+  height: 400px;
+  background: var(--cyber-blue);
+  top: -200px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.heroOrb:nth-child(2) {
+  width: 300px;
+  height: 300px;
+  background: var(--cyber-purple);
+  bottom: -150px;
+  left: 10%;
+  animation-delay: -5s;
+}
+
+.heroOrb:nth-child(3) {
+  width: 200px;
+  height: 200px;
+  background: var(--cyber-cyan);
+  top: 40%;
+  right: 20%;
+  animation-delay: -10s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -30px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+/* ============================================
+   HERO CONTENT LAYOUT
+   ============================================ */
+
+.heroContent {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* URDU SUPPORT */
+html[lang='ur'] .heroText {
+  text-align: right;
+  direction: rtl;
+}
+
+.heroText {
+  padding: 2rem;
+}
+
+/* CYBER TYPOGRAPHY */
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: var(--gradient-cyber);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  letter-spacing: -0.02em;
+}
+
+.heroTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100px;
+  height: 4px;
+  background: var(--gradient-cyber);
+  border-radius: 2px;
+}
+
+.heroSubtitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--cyber-text-secondary);
+  margin-bottom: 3rem;
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 600px;
+}
+
+/* STATS - CYBER STYLE */
+.heroStats {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  text-align: center;
+  position: relative;
+  padding: 1rem;
+  background: var(--gradient-card);
+  border-radius: 16px;
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+  transition: all 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--glow-primary);
+  border-color: var(--cyber-blue);
+}
+
+.statNumber {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: var(--gradient-cyber);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: var(--cyber-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* CYBER BUTTONS */
+.heroButtons {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.heroButtonPrimary {
+  position: relative;
+  overflow: hidden;
+  background: var(--gradient-cyber);
+  color: white;
+  padding: 1.2rem 2.5rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: var(--glow-primary);
+  letter-spacing: 0.5px;
+}
+
+.heroButtonPrimary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s;
+}
+
+.heroButtonPrimary:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: var(--glow-primary), 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+.heroButtonPrimary:hover::before {
+  left: 100%;
+}
+
+/* ============================================
+   ADVANCED ROBOT ANIMATION - NEXT LEVEL
+   ============================================ */
+
+.robotContainer {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  margin: 0 auto;
+  perspective: 1000px;
+}
+
+.robot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ROBOT BASE */
+.robotBase {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 30px;
+  background: linear-gradient(135deg, #4b5563, #1f2937);
+  border-radius: 10px 10px 0 0;
+  border: 2px solid var(--cyber-blue);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* ROBOT BODY */
+.robotBody {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 180px;
+  background: linear-gradient(135deg, #374151, #111827);
+  border-radius: 20px;
+  border: 3px solid var(--cyber-blue);
+  box-shadow: 
+    inset 0 0 20px rgba(59, 130, 246, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.robotBody::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(90deg, transparent, var(--cyber-blue), transparent);
+  opacity: 0.3;
+  animation: scanLine 3s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ROBOT HEAD */
+.robotHead {
+  position: absolute;
+  bottom: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #1f2937, #111827);
+  border-radius: 40% 40% 30% 30%;
+  border: 3px solid var(--cyber-blue);
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+/* GLOWING EYES */
+.robotEyes {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+}
+
+.robotEye {
+  width: 24px;
+  height: 24px;
+  background: var(--gradient-cyber);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 0 20px var(--cyber-blue);
+  animation: eyeGlow 2s ease-in-out infinite;
+}
+
+.robotEye::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes eyeGlow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ROBOT ARMS */
+.robotArm {
+  position: absolute;
+  bottom: 140px;
+  width: 20px;
+  height: 120px;
+  background: linear-gradient(135deg, #374151, #1f2937);
+  border: 2px solid var(--cyber-blue);
+  border-radius: 10px;
+  transform-origin: top center;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.robotLeftArm {
+  left: calc(50% - 80px);
+  transform: rotate(-15deg);
+}
+
+.robotRightArm {
+  right: calc(50% - 80px);
+  transform: rotate(15deg);
+}
+
+/* ROBOT LEGS */
+.robotLeg {
+  position: absolute;
+  bottom: 30px;
+  width: 25px;
+  height: 100px;
+  background: linear-gradient(to bottom, #374151, #1f2937);
+  border: 2px solid var(--cyber-blue);
+  border-radius: 0 0 10px 10px;
+  transform-origin: top center;
+  transition: transform 0.4s ease;
+}
+
+.robotLeftLeg {
+  left: calc(50% - 40px);
+}
+
+.robotRightLeg {
+  right: calc(50% - 40px);
+}
+
+/* ROBOT JOINTS */
+.robotJoint {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--cyber-blue);
+  border-radius: 50%;
+  border: 3px solid var(--cyber-dark);
+  box-shadow: 0 0 10px var(--cyber-blue);
+}
+
+.jointShoulder {
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.jointElbow {
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.jointHip {
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.jointKnee {
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ENERGY PULSE EFFECT */
+.energyPulse {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, transparent 30%, var(--cyber-blue) 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 1;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  50% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media screen and (max-width: 1200px) {
+  .heroContent {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .heroText {
+    order: 1;
+  }
+  
+  .robotContainer {
+    order: 2;
+    transform: scale(0.9);
+  }
+  
+  html[lang='ur'] .heroText {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .heroContent {
+    padding: 1rem;
+  }
+  
+  .robotContainer {
+    width: 300px;
+    height: 400px;
+    transform: scale(0.8);
+  }
+  
+  .heroStats {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .stat {
+    min-width: 100px;
+    padding: 0.8rem;
+  }
+  
+  .statNumber {
+    font-size: 2rem;
+  }
+  
+  .heroButtons {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+  
+  .heroSubtitle {
+    font-size: 1rem;
+  }
+  
+  .robotContainer {
+    width: 250px;
+    height: 350px;
+    transform: scale(0.7);
+  }
+  
+  .heroButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .heroButtonPrimary {
+    width: 100%;
+    max-width: 280px;
+  }
+}

@@ -1,0 +1,228 @@
+# OpenAPI Contract: Authentication System
+
+**Feature**: 001-auth-system
+**Date**: 2025-12-18
+**Version**: 1.0.0
+
+## Overview
+
+This document defines the API contracts for the authentication system. The API provides user registration, login, session management, and protected resource access functionality.
+
+## Base URL
+
+`http://localhost:8000/api/auth` (development)
+`https://your-domain.com/api/auth` (production)
+
+## Authentication
+
+Most endpoints require authentication via JWT token in HTTP-only cookie. Some public endpoints (login, register) do not require authentication.
+
+## Common Headers
+
+- `Content-Type: application/json`
+- `Accept: application/json`
+
+## Endpoints
+
+### 1. User Registration
+
+#### POST /signup
+
+Register a new user account.
+
+**Request:**
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (201 Created):**
+```json
+{
+  "id": "uuid-string",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "created_at": "2025-12-18T10:30:00Z",
+}
+```
+
+**Response (400 Bad Request):**
+```json
+{
+  "error": "Email already exists"
+}
+```
+
+**Response (422 Validation Error):**
+```json
+{
+  "error": "Validation failed",
+  "details": [
+    {
+      "field": "email",
+      "message": "Invalid email format"
+    }
+  ]
+}
+```
+
+### 2. User Login
+
+#### POST /login
+
+Authenticate user with email and password.
+
+**Request:**
+```json
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "user": {
+    "id": "uuid-string",
+    "name": "John Doe",
+    "email": "john@example.com"
+  },
+  "message": "Login successful"
+}
+```
+
+**Response (401 Unauthorized):**
+```json
+{
+  "error": "Invalid credentials"
+}
+```
+
+**Response (429 Too Many Requests):**
+```json
+{
+  "error": "Too many login attempts. Please try again later."
+}
+```
+
+### 3. User Logout
+
+#### POST /logout
+
+End the current user session.
+
+**Response (200 OK):**
+```json
+{
+  "message": "Logout successful"
+}
+```
+
+### 4. Get Current User
+
+#### GET /me
+
+Get information about the currently authenticated user.
+
+**Response (200 OK):**
+```json
+{
+  "id": "uuid-string",
+  "name": "John Doe",
+  "email": "john@example.com",
+  "email_verified": false,
+  "created_at": "2025-12-18T10:30:00Z"
+}
+```
+
+**Response (401 Unauthorized):**
+```json
+{
+  "error": "Authentication required"
+}
+```
+
+### 5. Verify Authentication
+
+#### GET /verify
+
+Verify if the current session is valid.
+
+**Response (200 OK):**
+```json
+{
+  "authenticated": true,
+  "user": {
+    "id": "uuid-string",
+    "name": "John Doe",
+    "email": "john@example.com"
+  }
+}
+```
+
+**Response (401 Unauthorized):**
+```json
+{
+  "authenticated": false,
+  "error": "Invalid or expired token"
+}
+```
+
+### 6. Refresh Token
+
+#### POST /refresh
+
+Refresh the JWT token for an active session.
+
+**Response (200 OK):**
+```json
+{
+  "message": "Token refreshed successfully"
+}
+```
+
+**Response (401 Unauthorized):**
+```json
+{
+  "error": "Session expired, please log in again"
+}
+```
+
+
+
+
+## Error Format
+
+All error responses follow this format:
+
+```json
+{
+  "error": "Error message",
+  "timestamp": "2025-12-18T10:30:00Z",
+  "path": "/api/auth/endpoint"
+}
+```
+
+## Security
+
+- Passwords must be at least 8 characters
+- Rate limiting: 5 attempts per IP per 15 minutes
+- JWT tokens expire after 7 days
+- Sessions stored in HTTP-only cookies
+- All sensitive data transmitted over HTTPS
+
+## Status Codes
+
+- `200 OK` - Request successful
+- `201 Created` - Resource created successfully
+- `400 Bad Request` - Invalid request data
+- `401 Unauthorized` - Authentication required or failed
+- `404 Not Found` - Resource does not exist
+- `409 Conflict` - Resource already exists
+- `422 Unprocessable Entity` - Validation failed
+- `429 Too Many Requests` - Rate limit exceeded
+- `500 Internal Server Error` - Server error
